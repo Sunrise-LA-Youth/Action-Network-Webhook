@@ -15,7 +15,13 @@ $client = new Client([
 // Get the input data from Action Network
 $orig = file_get_contents('php://input');
 $input = json_decode($orig, true);
-$input = $input[0]['osdi:signature'];
+if (in_array('osdi:signature',$input[0])) {
+    $input = $input[0]['osdi:signature'];
+}
+elseif (in_array('osdi:attendance',$input[0])) {
+    $input = $input[0]['osdi:attendance'];
+    
+}
 
 // Compile data needed for EveryAction API call from Action Network data
 $data = new stdClass();
